@@ -1,6 +1,6 @@
 # pem2secret
 
-This is a simple tool to format PEM files for used in K8S as secrets.
+This is a simple tool to format PEM files for used in K8S as secrets. (since I'm too lazy to format the indent...)
 
 ## Usage
 

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/base64"
 	"encoding/pem"
 	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 var name = flag.String("name", "", "the name of the secret")
@@ -32,7 +32,7 @@ func main() {
 		} else if block, _ := pem.Decode(content); block == nil {
 			fmt.Printf("ERR: %s is not a pem file\n", fname)
 		} else {
-			secretItems[fname] = base64.StdEncoding.EncodeToString(block.Bytes)
+			secretItems[fname] = string(content)
 		}
 	}
 
@@ -47,8 +47,10 @@ func main() {
 		fmt.Printf("  name: %s\n", *name)
 		fmt.Printf("data:\n")
 		for fname, content := range secretItems {
-			fmt.Printf("  %s: %s\n", fname, content)
+			fmt.Printf("  %s: |\n", fname)
+			for _, line := range strings.Split(content, "\n") {
+				fmt.Printf("    %s\n", line)
+			}
 		}
-		fmt.Println("")
 	}
 }
